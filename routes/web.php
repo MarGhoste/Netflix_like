@@ -1,10 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Dashboard;
 
 Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
+//Route::view('dashboard', 'dashboard')
+    //->middleware(['auth', 'verified'])
+    //->name('dashboard');
+
+Route::get('/dashboard', Dashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -18,6 +23,7 @@ use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RatingController;
+
 
 Route::middleware('auth')->group(function () {
     Route::resource('movies', MovieController::class);
