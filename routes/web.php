@@ -34,4 +34,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('comments', CommentController::class);
 });
 
+// routes/web.php
+
+use App\Models\Movie; // Asegúrate de que tu modelo exista
+
+Route::get('/movie/{id}', function ($id) {
+    // Usa findOrFail para buscar por la columna 'id'
+    $movie = Movie::findOrFail($id); 
+
+    return view('livewire.movie-details', compact('movie')); 
+})->name('movie.show');
+
 require __DIR__.'/auth.php';

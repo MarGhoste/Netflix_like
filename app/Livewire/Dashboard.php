@@ -21,6 +21,8 @@ class Dashboard extends Component
          ->layout('layouts.app');
     }
 
+    
+
      public function logout()
     {
         // Cierra la sesión

@@ -1,90 +1,121 @@
 <div class="min-h-screen bg-black text-white">
 
-    <aside
-        class="fixed top-0 left-0 h-screen w-20 bg-black bg-opacity-20 backdrop-blur-sm z-50 flex flex-col items-center py-2 items-start shadow-xl transition-all duration-300 hover:w-48 group">
-
-        <div class="mb-10 flex flex-col items-center">
-            <a href="{{ route('profile') }}"
-                class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-lg font-bold hover:bg-purple-700 transition duration-300"
-                title="{{ Auth::user()->name }}">
-                M
-            </a>
-            <span
-                class="mt-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                {{ Auth::user()->name }}
-            </span>
-        </div>
-
-        <nav class="flex flex-col items-center space-y-12 mt-40 justify-center">
-
-            <a href="#"
-                class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-purple-700/50 transition duration-300 w-16"
-                title="Recomendados">
-                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-                </svg>
+    {{-- Menu lateral (ASIDE) --}}
+    <x-app.sidebar />
+    {{-- Cierre del menu lateral (ASIDE --}}
 
 
-                <span
-                    class="text-sm opacity-0 group-hover:opacity-100 group-hover:relative group-hover:left-0 transition-opacity duration-300 whitespace-nowrap">
+    {{-- Contenido principal --}}
+    <div id="app-container-teatro" class="min-h-screen bg-black text-white">
 
-                </span>
-            </a>
+        {{-- Contenido principal --}}
+        <main id="teatro-escenario" class="ml-20 mx-auto max-w-7xl pt-8 pb-12 px-8">
 
-            <a href="#"
-                class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-purple-700/50 transition duration-300 w-16"
-                title="Lo Nuevo">
-                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" />
-                </svg>
+            {{-- === HERO BANNER PRINCIPAL === --}}
+            <div class="relative w-full h-96 bg-gray-800 rounded-lg overflow-hidden shadow-2xl">
 
-                <span
-                    class="text-sm opacity-0 group-hover:opacity-100 group-hover:relative group-hover:left-0 transition-opacity duration-300 whitespace-nowrap">
+                <img src="{{ asset('images/feature-4.png') }}" alt="Póster de Película Destacada"
+                    class="w-full h-full object-cover opacity-60">
 
-                </span>
-            </a>
+                <div
+                    class="absolute inset-0 p-8 flex flex-col justify-center bg-gradient-to-r from-black/80 to-transparent">
+                    <h2 class="text-5xl font-extrabold mb-3 text-white">Título de Película Destacada</h2>
+                    <p class="text-lg text-gray-300 mb-4 max-w-lg">
+                        Descripción corta e impactante de la película. Un thriller de ciencia ficción que desafía las
+                        leyes del espacio y el tiempo.
+                    </p>
 
-            <a href="#"
-                class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-purple-700/50 transition duration-300 w-16"
-                title="Tendencia">
-                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
-                </svg>
+                    <div class="flex space-x-4 mt-2">
+                        <button
+                            class="flex items-center px-6 py-3 bg-white text-black font-semibold rounded-full shadow-lg hover:bg-gray-200 transition duration-300">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                            </svg>
+                            Ver Ahora
+                        </button>
+                        <button
+                            class="flex items-center px-6 py-3 bg-purple-600 text-white font-semibold rounded-full shadow-lg hover:bg-purple-700 transition duration-300">
+                            + Mi Lista
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- === FILA DE CONTENIDO (CARRUSEL) === --}}
+
+            {{-- === SECCIÓN DE CUADRÍCULA (Recomedados) === --}}
+            <h2 class="text-2xl font-bold mt-12 mb-6 text-white">Recomendados para ti</h2>
+
+            <div class="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
+
+                {{-- Tarjeta de Película/Serie (Ejemplo 1) --}}
+                @for ($i = 1; $i <= 8; $i++)
+                    <a href="{{ route('movie.show', ['id' => $i]) }}"
+                        class="flex-shrink-0 w-52 bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition duration-500 hover:scale-105 hover:shadow-purple-500/50">
+                        <img src="{{ asset('images/telon.jpg' . $i . '.jpg') }}" alt="Póster {{ $i }}"
+                            class="w-full h-64 object-cover">
+                        <div class="p-3">
+                            <h3 class="text-base font-semibold truncate text-white">Título Corto {{ $i }}
+                            </h3>
+                            <p class="text-sm text-gray-400 mt-1">2023 | Thriller</p>
+                        </div>
+                    </a>
+                @endfor
+
+            </div>
+
+            {{-- FIN DE FILA DE CONTENIDO (Recomendados) --}}
 
 
-                <span
-                    class="text-sm opacity-0 group-hover:opacity-100 group-hover:relative group-hover:left-0 transition-opacity duration-300 whitespace-nowrap">
+            {{-- === SECCIÓN DE CUADRÍCULA (Lo Nuevo) === --}}
+            <h2 class="text-2xl font-bold mt-12 mb-6 text-white">Colecciones que podrías amar</h2>
 
-                </span>
-            </a>
-            <button wire:click="logout"
-                class="absolute bottom-6 flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-red-700/50 transition duration-300"
-                title="Cerrar Sesión">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 
-                <svg class="w-7 h-7 flex-shrink-0 mx-auto group-hover:mx-0 transition-all duration-300" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                    </path>
-                </svg>
-                <span
-                    class="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                {{-- Tarjeta de Película/Serie en Cuadrícula (Ejemplo 9 a 14) --}}
+                @for ($i = 9; $i <= 14; $i++)
+                    <div
+                        class="bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition duration-500 hover:scale-[1.03] hover:shadow-purple-500/50">
+                        <img src="{{ asset('images/poster-' . $i . '.jpg') }}" alt="Póster {{ $i }}"
+                            class="w-full h-56 object-cover">
+                        <div class="p-3 text-center">
+                            <h3 class="text-base font-semibold truncate text-white">Colección Título
+                                {{ $i }}
+                            </h3>
+                        </div>
+                    </div>
+                @endfor
 
-                </span>
-            </button>
+            </div>
 
-        </nav>
-    </aside>
+            {{-- FIN DE FILA DE LA SEGUNDA FILA DE CONTENIDO (Lo Nuevo) --}}
 
-    <main class="ml-20 p-8">
-        <h1 class="text-3xl font-bold"></h1>
-        <p class="mt-4 text-gray-400">
-        </p>
+            {{-- === FILA DE CONTENIDO (TENDENCIAS) === --}}
+            <h2 class="text-2xl font-bold mt-12 mb-6 text-white">Tendencia Global</h2>
+
+            <div class="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
+
+                {{-- Tarjeta de Película/Serie (Ejemplo 15 a 22) --}}
+                @for ($i = 15; $i <= 22; $i++)
+                    <div
+                        class="flex-shrink-0 w-60 bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition duration-500 hover:scale-105 hover:shadow-purple-500/50">
+                        <img src="{{ asset('images/poster-' . $i . '.jpg') }}" alt="Póster {{ $i }}"
+                            class="w-full h-32 object-cover">
+                        <div class="p-3">
+                            <h3 class="text-lg font-semibold truncate text-white">Película Hot {{ $i }}
+                            </h3>
+                            <p class="text-sm text-purple-400 mt-1">¡Ahora en Streaming!</p>
+                        </div>
+                    </div>
+                @endfor
+
+            </div>
+            {{-- FIN DE LA FILA DE TENDDENCIAS --}}
+
+        </main>
+    </div>
+
     </main>
+</div>
 </div>

@@ -1,0 +1,48 @@
+/* resources/css/dashboard-teatro.css */
+
+/* 1. Estilos para el Marco (Bordes Laterales y Superior) */
+#app-container-teatro {
+    /* La sombra interior imita el marco de 80px de grosor */
+    box-shadow: 
+        /* Marco Superior (mantiene la simulación de la cortina) */
+        inset 0 80px 0 0 #4a044e, /* Púrpura oscuro */
+        /* Bordes Laterales Extensibles */
+        inset 80px 0 0 0 #4a044e, 
+        inset -80px 0 0 0 #4a044e; 
+    
+    /* Nota: El fondo del contenedor sigue siendo negro (#000000) por la clase bg-black */
+}
+
+/* 2. Estilos para el Escenario (Iluminación y Espacio) */
+#teatro-escenario {
+    /* Limpiamos cualquier borde o sombra que ya no sea necesaria */
+    border: none;
+    background-color: transparent;
+    
+    /* Añadimos un padding para que el contenido no toque los bordes simulados del box-shadow */
+    padding-top: 50px; /* Espacio debajo del borde superior */
+    
+    /* Sombra Interior para simular la iluminación del escenario */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9) inset; 
+}
+
+/* Ajuste de Margen para el Sidebar (se mantiene igual) */
+@media (min-width: 1024px) {
+    #teatro-escenario {
+        margin-left: 100px; 
+        margin-right: 20px;
+    }
+}
+
+/* resources/css/dashboard-teatro.css */
+
+/* Ocultar la barra de desplazamiento en navegadores WebKit (Chrome, Safari) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ocultar la barra de desplazamiento en IE, Edge, y Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
