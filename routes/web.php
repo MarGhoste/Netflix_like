@@ -45,4 +45,32 @@ Route::get('/movie/{id}', function ($id) {
     return view('livewire.movie-details', compact('movie')); 
 })->name('movie.show');
 
+// routes/web.php
+
+use App\Http\Controllers\CatalogController; // Creamos este controlador en el siguiente paso
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+// Ruta dinámica: acepta 'recomendados', 'nuevo', o 'tendencias'
+Route::get('/catalogo/{category}', [CatalogController::class, 'show'])
+    ->name('catalog.show');
+
+Route::post('logout', function (Request $request) {
+    // 1. Cierra la sesión del usuario
+    Auth::guard('web')->logout();
+
+    // 2. Invalida la sesión actual
+    $request->session()->invalidate();
+
+    // 3. Regenera el token CSRF para evitar ataques
+    $request->session()->regenerateToken();
+
+    // 4. Redirige al usuario a la página de inicio o a donde desees
+    // Usualmente es la página de login ('login') o la raíz ('/')
+    return redirect('/'); 
+})->middleware('auth')->name('logout');
+
+
 require __DIR__.'/auth.php';
+
+

@@ -16,6 +16,23 @@
 
          <a href="{{ route('dashboard') }}"
              class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-purple-700/50 transition duration-300 w-16"
+             title="Inicio">
+             <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.5" stroke="currentColor" class="size-6">
+                 <path stroke-linecap="round" stroke-linejoin="round"
+                     d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+             </svg>
+
+
+
+             <span
+                 class="text-sm opacity-0 group-hover:opacity-100 group-hover:relative group-hover:left-0 transition-opacity duration-300 whitespace-nowrap">
+
+             </span>
+         </a>
+
+         <a href="{{ route('catalog.show', ['category' => 'recomendados']) }}"
+             class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-purple-700/50 transition duration-300 w-16"
              title="Recomendados">
              <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                  stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -30,7 +47,7 @@
              </span>
          </a>
 
-         <a href="{{ route('dashboard') }}"
+         <a href="{{ route('catalog.show', ['category' => 'nuevo']) }}"
              class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-purple-700/50 transition duration-300 w-16"
              title="Lo Nuevo">
              <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -45,7 +62,7 @@
              </span>
          </a>
 
-         <a href="#"
+         <a href="{{ route('catalog.show', ['category' => 'tendencias']) }}"
              class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-purple-700/50 transition duration-300 w-16"
              title="Tendencia">
              <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -60,20 +77,25 @@
 
              </span>
          </a>
-         <button wire:click="logout"
-             class="absolute bottom-6 flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-red-700/50 transition duration-300"
-             title="Cerrar Sesión">
+         <form method="POST" action="{{ route('logout') }}" class="absolute bottom-6">
+             @csrf
+             <button type="submit"
+                 class="flex items-center space-x-4 p-2 rounded-lg text-gray-300 hover:text-white hover:bg-red-700/50 transition duration-300"
+                 title="Cerrar Sesión">
 
-             <svg class="w-7 h-7 flex-shrink-0 mx-auto group-hover:mx-0 transition-all duration-300" fill="none"
-                 stroke="currentColor" viewBox="0 0 24 24">
-                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                 </path>
-             </svg>
-             <span class="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                 <svg class="w-7 h-7 flex-shrink-0 mx-auto group-hover:mx-0 transition-all duration-300" fill="none"
+                     stroke="currentColor" viewBox="0 0 24 24">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                     </path>
+                 </svg>
 
-             </span>
-         </button>
+                 <span
+                     class="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                     Cerrar Sesión
+                 </span>
+             </button>
+         </form>
 
      </nav>
  </aside>

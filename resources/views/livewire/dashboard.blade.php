@@ -45,73 +45,19 @@
             {{-- === FILA DE CONTENIDO (CARRUSEL) === --}}
 
             {{-- === SECCIÓN DE CUADRÍCULA (Recomedados) === --}}
-            <h2 class="text-2xl font-bold mt-12 mb-6 text-white">Recomendados para ti</h2>
-
-            <div class="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
-
-                {{-- Tarjeta de Película/Serie (Ejemplo 1) --}}
-                @for ($i = 1; $i <= 8; $i++)
-                    <a href="{{ route('movie.show', ['id' => $i]) }}"
-                        class="flex-shrink-0 w-52 bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition duration-500 hover:scale-105 hover:shadow-purple-500/50">
-                        <img src="{{ asset('images/telon.jpg' . $i . '.jpg') }}" alt="Póster {{ $i }}"
-                            class="w-full h-64 object-cover">
-                        <div class="p-3">
-                            <h3 class="text-base font-semibold truncate text-white">Título Corto {{ $i }}
-                            </h3>
-                            <p class="text-sm text-gray-400 mt-1">2023 | Thriller</p>
-                        </div>
-                    </a>
-                @endfor
-
-            </div>
-
+            <x-movie-row-carousel title="Recomendados para ti" :movies="range(1, 8)" />
             {{-- FIN DE FILA DE CONTENIDO (Recomendados) --}}
 
 
             {{-- === SECCIÓN DE CUADRÍCULA (Lo Nuevo) === --}}
-            <h2 class="text-2xl font-bold mt-12 mb-6 text-white">Colecciones que podrías amar</h2>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-
-                {{-- Tarjeta de Película/Serie en Cuadrícula (Ejemplo 9 a 14) --}}
-                @for ($i = 9; $i <= 14; $i++)
-                    <div
-                        class="bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition duration-500 hover:scale-[1.03] hover:shadow-purple-500/50">
-                        <img src="{{ asset('images/poster-' . $i . '.jpg') }}" alt="Póster {{ $i }}"
-                            class="w-full h-56 object-cover">
-                        <div class="p-3 text-center">
-                            <h3 class="text-base font-semibold truncate text-white">Colección Título
-                                {{ $i }}
-                            </h3>
-                        </div>
-                    </div>
-                @endfor
-
-            </div>
-
+            <x-movie-row-carousel title="Lo Nuevo" :movies="range(15, 22)" />
             {{-- FIN DE FILA DE LA SEGUNDA FILA DE CONTENIDO (Lo Nuevo) --}}
 
             {{-- === FILA DE CONTENIDO (TENDENCIAS) === --}}
-            <h2 class="text-2xl font-bold mt-12 mb-6 text-white">Tendencia Global</h2>
-
-            <div class="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
-
-                {{-- Tarjeta de Película/Serie (Ejemplo 15 a 22) --}}
-                @for ($i = 15; $i <= 22; $i++)
-                    <div
-                        class="flex-shrink-0 w-60 bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition duration-500 hover:scale-105 hover:shadow-purple-500/50">
-                        <img src="{{ asset('images/poster-' . $i . '.jpg') }}" alt="Póster {{ $i }}"
-                            class="w-full h-32 object-cover">
-                        <div class="p-3">
-                            <h3 class="text-lg font-semibold truncate text-white">Película Hot {{ $i }}
-                            </h3>
-                            <p class="text-sm text-purple-400 mt-1">¡Ahora en Streaming!</p>
-                        </div>
-                    </div>
-                @endfor
-
-            </div>
+            <x-movie-row-carousel title="Tendencia Global" :movies="range(23, 30)" />
             {{-- FIN DE LA FILA DE TENDDENCIAS --}}
+
+            {{-- === FIN DE LA FILA DE CONTENIDO (CARRUSEL) === --}}
 
         </main>
     </div>
