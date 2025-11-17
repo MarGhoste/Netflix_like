@@ -4,37 +4,38 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Movie;
 
 class Dashboard extends Component
 {
+    public $heroMovie;
+    public $newMovies;
+    public $trendingMovies;
+    public $recommendedMovies;
 
-    // Esta es la lógica del componente.
-    // Por ahora, lo dejamos vacío, pero aquí irán:
-    // - Las películas o series principales (variables)
-    // - La lógica de búsqueda, filtros, etc.
-
-
-    public function render()
+    public function mount()
     {
-        // Esta función carga la vista livewire/dashboard.blade.php
-        return view('livewire.dashboard')
-         ->layout('layouts.app');
+        // Lógica de carga de datos (NO necesita cambiarse)
+        $this->heroMovie = Movie::where('is_published', true)->where('is_trending', true)->latest('id')->first();
+        $this->newMovies = Movie::where('is_published', true)->where('is_new', true)->latest('release_date')->take(12)->get();
+        $this->trendingMovies = Movie::where('is_published', true)->where('is_trending', true)->latest('created_at')->take(12)->get();
+        $this->recommendedMovies = $this->newMovies;
     }
 
-    
-
-     public function logout()
+    // EL PUNTO CLAVE ES AQUÍ: APUNTAR A LA UBICACIÓN CORRECTA DE LA VISTA
+    public function render()
     {
-        // Cierra la sesión
+        // ESTO ASUME QUE EL ARCHIVO DE TU DASHBOARD ES: resources/views/livewire/dashboard.blade.php
+        return view('livewire.dashboard')
+            ->layout('layouts.app');
+    }
+
+    public function logout()
+    {
+        // ... (Lógica de logout) ...
         Auth::guard('web')->logout();
-
-        // Invalida la sesión (prevención de seguridad)
         session()->invalidate();
-        
-        // Regenera el token CSRF (prevención de seguridad)
         session()->regenerateToken();
-
-        // Redirige a la página de inicio (o a donde desees)
         return redirect('/');
     }
 }

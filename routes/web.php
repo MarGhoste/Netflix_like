@@ -6,8 +6,8 @@ use App\Livewire\Dashboard;
 Route::view('/', 'welcome');
 
 //Route::view('dashboard', 'dashboard')
-    //->middleware(['auth', 'verified'])
-    //->name('dashboard');
+//->middleware(['auth', 'verified'])
+//->name('dashboard');
 
 Route::get('/dashboard', Dashboard::class)
     ->middleware(['auth', 'verified'])
@@ -40,9 +40,9 @@ use App\Models\Movie; // Asegúrate de que tu modelo exista
 
 Route::get('/movie/{id}', function ($id) {
     // Usa findOrFail para buscar por la columna 'id'
-    $movie = Movie::findOrFail($id); 
+    $movie = Movie::findOrFail($id);
 
-    return view('livewire.movie-details', compact('movie')); 
+    return view('livewire.movie-details', compact('movie'));
 })->name('movie.show');
 
 // routes/web.php
@@ -50,6 +50,7 @@ Route::get('/movie/{id}', function ($id) {
 use App\Http\Controllers\CatalogController; // Creamos este controlador en el siguiente paso
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\WatchController;
 
 // Ruta dinámica: acepta 'recomendados', 'nuevo', o 'tendencias'
 Route::get('/catalogo/{category}', [CatalogController::class, 'show'])
@@ -67,10 +68,12 @@ Route::post('logout', function (Request $request) {
 
     // 4. Redirige al usuario a la página de inicio o a donde desees
     // Usualmente es la página de login ('login') o la raíz ('/')
-    return redirect('/'); 
+    return redirect('/');
 })->middleware('auth')->name('logout');
 
+Route::get('/watch/{movie}', [WatchController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('movie.watch');
 
-require __DIR__.'/auth.php';
 
-
+require __DIR__ . '/auth.php';

@@ -13,22 +13,32 @@
             {{-- CUADRÍCULA DINÁMICA DE PELÍCULAS --}}
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
 
-                @foreach ($movies as $movieId)
-                    <a href="{{ route('movie.show', ['id' => $movieId]) }}"
+                {{-- CORRECCIÓN CLAVE: Iterar sobre $movies (plural) como $movie (singular) --}}
+                @foreach ($movies as $movie)
+                    <a href="{{ route('movie.show', ['id' => $movie->id]) }}"
                         class="bg-gray-900 rounded-lg overflow-hidden shadow-xl transform transition duration-500 hover:scale-[1.03] hover:shadow-purple-500/50">
 
-                        {{-- Usamos el ID del bucle para la imagen de ejemplo --}}
-                        <img src="{{ asset('images/poster-' . $movieId . '.jpg') }}" alt="Póster {{ $movieId }}"
+                        {{-- CORRECCIÓN 1: Usar la columna 'image' de la base de datos --}}
+                        <img src="{{ asset('storage/' . $movie->image) }}" alt="{{ $movie->title }}"
                             class="w-full h-72 object-cover">
+
                         <div class="p-3 text-center">
-                            <h3 class="text-base font-semibold truncate text-white">Película ID: {{ $movieId }}
-                            </h3>
+                            {{-- CORRECCIÓN 2: Usar las propiedades de $movie --}}
+                            <h3 class="text-base font-semibold truncate text-white">{{ $movie->title }}</h3>
+                            <p class="text-sm text-gray-400">
+                                {{-- CORRECCIÓN 3: Acceder al release_date --}}
+                                {{ $movie->release_date ? date('Y', strtotime($movie->release_date)) : 'N/A' }}
+                            </p>
                         </div>
                     </a>
                 @endforeach
 
             </div>
-            {{-- Aquí iría la paginación si usaras datos reales --}}
+
+            {{-- Paginación enviada por el controlador --}}
+            <div class="mt-8 col-span-full">
+                {{ $movies->links() }}
+            </div>
 
         </main>
     </div>
