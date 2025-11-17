@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\IconColumn;
@@ -90,6 +91,34 @@ class MovieResource extends Resource
                 Toggle::make('is_new')
                     ->label('Mostrar como Novedad')
                     ->default(true),
+
+                // --- RELACIONES MULTISELECT ---
+                // 1. GÉNEROS
+                Select::make('genres')
+                    ->label('Géneros')
+                    ->multiple()
+                    ->relationship('genres', 'name') // Usa el campo 'name' del modelo Genre
+                    ->preload() // Carga los géneros existentes
+                    ->searchable() // Permite buscar en la lista
+                    ->required(),
+
+                // 2. DIRECTORES
+                // 2. DIRECTOR (UNO A MUCHOS INVERSA - BelongsTo)
+                Select::make('director_id') // ✅ CORRECCIÓN: Usar la clave foránea (FK)
+                    ->label('Director')
+                    // Usamos el nombre de la relación ('director') para que sepa qué datos cargar
+                    ->relationship('director', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->required(),
+
+                // 3. ACTORES
+                Select::make('actors')
+                    ->label('Actores Principales')
+                    ->multiple()
+                    ->relationship('actors', 'name') // Asume que el modelo Actor tiene un campo 'name'
+                    ->preload()
+                    ->searchable(),
             ])
             ->columns(2); // Organiza los campos en dos columnas
     }
@@ -100,13 +129,35 @@ class MovieResource extends Resource
                 ImageColumn::make('image')
                     ->label('Póster')
                     ->disk('public')
-                    ->height(80), // Tamaño para la vista de tabla
+                    ->height(80),
 
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable()
-                    ->description(fn($record) => Str::limit($record->description, 30)), // Muestra un extracto de la descripción
+                    ->description(fn($record) => Str::limit($record->description, 30)),
 
+                // --- COLUMNAS DE RELACIONES ---
+
+                // 1. DIRECTOR (Relación BelongsTo - Singular)
+                TextColumn::make('director.name')
+                    ->label('Director')
+                    ->searchable() // Permite buscar películas por nombre de director
+                    ->sortable(),
+
+                // 2. GÉNEROS (Relación BelongsToMany - Plural)
+                TextColumn::make('genres.name')
+                    ->label('Géneros')
+                    ->badge() // Muestra los géneros como "etiquetas" pequeñas
+                    ->searchable(), // Permite buscar películas por género
+
+                // 3. ACTORES (Relación BelongsToMany - Plural)
+                TextColumn::make('actors.name')
+                    ->label('Actores Principales')
+                    //->listWithSeparator() // Muestra los nombres separados por comas
+                    ->limitList(3) // Muestra solo los primeros 3 para no saturar la tabla
+                    ->tooltip(fn($record) => $record->actors->pluck('name')->implode(', ')), // Muestra todos al pasar el ratón
+
+                // --- METADATOS BÁSICOS ---
                 TextColumn::make('release_date')
                     ->label('Estreno')
                     ->date()
@@ -116,6 +167,7 @@ class MovieResource extends Resource
                     ->label('Duración (min)')
                     ->sortable(),
 
+                // --- COLUMNAS DE ESTADO ---
                 IconColumn::make('is_published')
                     ->label('Publicada')
                     ->boolean()
@@ -133,7 +185,7 @@ class MovieResource extends Resource
                     ->label('Creado')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), // Oculto por defecto
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 // Puedes añadir filtros aquí

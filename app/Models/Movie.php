@@ -26,12 +26,12 @@ class Movie extends Model
 
     public function genres(): BelongsToMany
     {
-        return $this->belongsToMany(Genre::class);
+        return $this->belongsToMany(Genre::class, 'movie_genre');
     }
 
     public function actors(): BelongsToMany
     {
-        return $this->belongsToMany(Actor::class);
+        return $this->belongsToMany(Actor::class, 'actor_movie');
     }
 
     public function ratings(): HasMany
