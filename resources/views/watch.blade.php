@@ -123,35 +123,6 @@
             </div>
         </div>
 
-        {{-- Sección de Información de la Película --}}
-        <div class="w-full max-w-7xl px-4 py-8">
-            <div class="flex flex-col md:flex-row gap-8">
-                {{-- Columna Izquierda: Título y Descripción --}}
-                <div class="flex-grow">
-                    <h1 class="text-4xl lg:text-5xl font-extrabold mb-3 text-white">{{ $movie->title }}</h1>
-
-                    <div class="flex items-center space-x-4 mb-6 text-gray-400">
-                        <span>{{ $movie->release_date ? date('Y', strtotime($movie->release_date)) : 'N/A' }}</span>
-                        <span class="border border-gray-600 px-2 py-0.5 text-sm rounded">HD</span>
-                        <span class="border border-gray-600 px-2 py-0.5 text-sm rounded">5.1</span>
-                        <span>{{ $movie->duration ? $movie->duration . ' min' : '' }}</span>
-                    </div>
-
-                    <p class="text-gray-300 leading-relaxed max-w-3xl">
-                        {{ $movie->description }}
-                    </p>
-                </div>
-
-                {{-- Columna Derecha: Metadatos --}}
-                <div class="flex-shrink-0 md:w-1/3">
-                    <p class="mb-2"><span class="text-gray-500">Géneros:</span> <span class="text-white">Acción,
-                            Aventura</span></p>
-                    <p class="mb-2"><span class="text-gray-500">Director:</span> <span class="text-white">Sin
-                            Director</span></p>
-                    <p><span class="text-gray-500">Clasificación:</span> <span class="text-white">+16</span></p>
-                </div>
-            </div>
-        </div>
     </main>
 
     <script>
@@ -172,6 +143,17 @@
             const recommendationBox = document.getElementById('recommendation-box');
             const recommendationTitle = document.getElementById('recommendation-title');
             const recommendationLink = document.getElementById('recommendation-link');
+
+            // --- ¡CAMBIO CLAVE PARA PANTALLA COMPLETA! ---
+            // Cuando el video comience a reproducirse (evento 'playing'), intentamos ponerlo en pantalla completa.
+            // Nota: Esto puede ser bloqueado por algunos navegadores si no detectan una interacción reciente del usuario.
+            player.on('playing', function() {
+                player.requestFullscreen().catch(error => {
+                    // Es normal que esto falle si el usuario no ha interactuado con la página,
+                    // por lo que usamos console.warn para no mostrar un error alarmante.
+                    console.warn('No se pudo activar la pantalla completa automáticamente:', error);
+                });
+            });
 
             // Escuchar el evento 'ended' (Fin del video)
             player.on('ended', function() {

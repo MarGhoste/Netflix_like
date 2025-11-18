@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\User;
 
 class Movie extends Model
 {
@@ -47,5 +48,10 @@ class Movie extends Model
     public function director(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Director::class);
+    }
+    public function favoritedBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'movie_favorites', 'movie_id', 'user_id')
+            ->withTimestamps();
     }
 }

@@ -34,6 +34,7 @@
             {{ $slot }}
         </main>
     </div>
+    <livewire:footer />
 </body>
 
 </html>

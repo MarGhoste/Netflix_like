@@ -51,6 +51,7 @@ use App\Http\Controllers\CatalogController; // Creamos este controlador en el si
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\WatchController;
+use App\Livewire\MyList;
 
 // Ruta dinámica: acepta 'recomendados', 'nuevo', o 'tendencias'
 Route::get('/catalogo/{category}', [CatalogController::class, 'show'])
@@ -74,6 +75,10 @@ Route::post('logout', function (Request $request) {
 Route::get('/watch/{movie}', [WatchController::class, 'show'])
     ->middleware(['auth', 'verified'])
     ->name('movie.watch');
+
+Route::get('/mi-lista', MyList::class)
+    ->middleware('auth') // Clave: Solo usuarios logueados pueden acceder
+    ->name('my-list');
 
 
 require __DIR__ . '/auth.php';

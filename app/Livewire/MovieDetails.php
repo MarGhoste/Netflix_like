@@ -1,27 +1,33 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
+use App\Models\Genre;
+use App\Models\Movie;
 use Livewire\Component;
-use App\Models\Movie; // Importa el modelo
 
 class MovieDetails extends Component
 {
-    // 1. Define una propiedad pública para almacenar el objeto de la película
-    public $movie;
+    public Movie $movie;
 
-    // 2. Método Mount: Se ejecuta cuando el componente se inicializa
-    // Recibe el ID de la película desde la URL
-    public function mount($id)
+    /**
+     * Mount the component with the given movie.
+     *
+     * @param  \App\Models\Movie  $movie
+     * @return void
+     */
+    public function mount(Movie $movie)
     {
-        // Busca la película por ID o falla (error 404)
-        $this->movie = Movie::findOrFail($id);
+        $this->movie = $movie;
     }
 
-    // 3. Render: Envía la vista
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.movie-details');
-        // NOTA: Livewire envía automáticamente la propiedad $this->movie a la vista
     }
 }

@@ -1,84 +1,91 @@
 <x-app-layout>
-    <style>
-        /* Replicamos el estilo de escenario en esta vista */
-
-        .detalle-escenario {
-
-            background-color: #000000;
-
-            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
-
-        }
-    </style>
-
-    <div class="min-h-screen bg-black text-white">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">
 
         <x-app.sidebar />
 
-        <main class="ml-20 mx-auto max-w-7xl pt-8 pb-12 px-8">
+        <main class="ml-20">
+            {{-- HERO BANNER DE LA PELÍCULA --}}
+            <div class="relative w-full h-[60vh] min-h-[500px] flex items-center justify-start">
 
-            <div class="detalle-escenario rounded-lg shadow-2xl p-8 mt-10">
-
-                <div class="flex flex-col md:flex-row gap-8">
-
-                    {{-- Columna Izquierda: Poster --}}
-                    <div class="md:w-1/3 flex-shrink-0">
-                        {{-- CORRECCIÓN 1: Usamos la columna 'image' de la BD --}}
-                        <img src="{{ asset('storage/' . $movie->image) }}" alt="{{ $movie->title }}"
-                            class="w-full h-auto rounded-lg shadow-xl object-cover border-4 border-purple-600/50">
+                {{-- Imagen de fondo con superposición oscura --}}
+                <div class="absolute inset-0">
+                    <img src="{{ asset('storage/' . $movie->image) }}" alt="Fondo de {{ $movie->title }}"
+                        class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent">
                     </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent">
+                    </div>
+                </div>
 
-                    {{-- Columna Derecha: Información y Botones --}}
-                    <div class="md:w-2/3">
+                {{-- Contenido de Información --}}
+                <div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+                    <div class="max-w-3xl">
+                        <h1
+                            class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg [text-shadow:0_0_15px_#9333ea]">
+                            {{ $movie->title }}
+                        </h1>
 
-                        <h1 class="text-5xl font-extrabold text-white mb-4">{{ $movie->title }}</h1>
+                        {{-- Metadatos --}}
+                        <div class="flex items-center flex-wrap gap-x-4 gap-y-2 mt-4 text-gray-300 font-semibold">
+                            <span>{{ $movie->release_date ? \Carbon\Carbon::parse($movie->release_date)->format('Y') : 'N/A' }}</span>
+                            <span class="border border-gray-500 px-2 py-0.5 rounded text-sm">HD</span>
+                            <span>{{ $movie->duration ? $movie->duration . ' min' : '' }}</span>
+                            @if ($movie->genres->isNotEmpty())
+                                <span>&bull;</span>
+                                <span>{{ $movie->genres->pluck('name')->implode(', ') }}</span>
+                            @endif
+                        </div>
 
-                        <p class="text-lg text-gray-400 mb-6">
-                            {{-- CORRECCIÓN 2: Usamos 'release_date' y formateamos el año --}}
-                            {{ $movie->release_date ? date('Y', strtotime($movie->release_date)) : 'N/A' }}
-                            |
-                            {{-- Columna 'genre' no existe, mostramos 'N/A' o puedes añadir otra columna --}}
-                            N/A
-                        </p>
-
-                        <p class="text-gray-300 leading-relaxed mb-8">
-                            {{-- CONEXIÓN CORRECTA: Usamos 'description' --}}
+                        <p class="text-gray-300 leading-relaxed mt-6 max-w-2xl">
                             {{ $movie->description }}
                         </p>
 
-                        <a href="{{ route('movie.watch', ['movie' => $movie->id]) }}"
-                            class="w-full sm:w-auto flex items-center justify-center px-10 py-4 bg-purple-600 text-white font-bold text-xl rounded-lg shadow-xl hover:bg-purple-700 transition duration-300 mb-6">
-                            <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                            </svg>
-                            Iniciar Película
-                        </a>
-
-                        <div class="flex space-x-4">
-                            {{-- Botones de Likes/Dislikes (funcionalidad no implementada aún, pero listos) --}}
+                        {{-- Botones de Acción --}}
+                        <div class="flex flex-wrap items-center gap-4 mt-8">
                             <a href="{{ route('movie.watch', ['movie' => $movie->id]) }}"
-                                class="w-full sm:w-auto flex items-center justify-center px-10 py-4 bg-purple-600 text-white font-bold text-xl rounded-lg shadow-xl hover:bg-purple-700 transition duration-300 mb-6">
-                                <svg class="w-6 h-6 mr-3" fill="currentColor"
-                                    viewBox="0 0 20 20">
-                                    
-                                    <path
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                                    
+                                class="flex items-center px-6 py-3 bg-white text-black font-extrabold text-lg rounded-md shadow-xl hover:bg-gray-200 transition duration-300 transform hover:scale-105">
+                                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                        clip-rule="evenodd"></path>
                                 </svg>
                                 Iniciar Película
-                                </a>
+                            </a>
+
+                            <a href="{{ route('my-list') }}"
+                                class="flex items-center px-6 py-3 bg-gray-700/70 text-white font-semibold text-lg rounded-md shadow-lg hover:bg-gray-600/80 transition duration-300 backdrop-blur-sm">
+                                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                                Mi Lista
+                            </a>
 
                             {{-- INTEGRACIÓN DE LIVEWIRE AQUI --}}
                             @livewire('movie-rating', ['movie' => $movie])
                             {{-- FIN INTEGRACIÓN --}}
                         </div>
-
                     </div>
                 </div>
-
             </div>
 
+            {{-- Contenido Adicional (Actores, Director, etc.) --}}
+            <div class="max-w-7xl mx-auto px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-300">
+                    <div>
+                        <h3 class="text-gray-500 font-semibold mb-2">Director</h3>
+                        <p class="text-lg">{{ $movie->director->name ?? 'No disponible' }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-gray-500 font-semibold mb-2">Elenco</h3>
+                        <p class="text-lg">{{ $movie->actors->pluck('name')->take(5)->implode(', ') }}...</p>
+                    </div>
+                    <div>
+                        <h3 class="text-gray-500 font-semibold mb-2">Clasificación</h3>
+                        <p class="text-lg">+16 (Ejemplo)</p>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </x-app-layout>

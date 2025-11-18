@@ -1,61 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Plataforma de Streaming tipo Netflix
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es una aplicación web desarrollada con Laravel y Livewire que emula las funcionalidades básicas de una plataforma de streaming de video como Netflix. Permite a los usuarios explorar un catálogo de películas, ver detalles, añadirlas a una lista personal y calificarlas.
 
-## About Laravel
+**Desarrollado por:** Marcos Carpio Corazon.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Características Principales
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Dashboard Dinámico:** Página de inicio que muestra una película destacada (Hero), carruseles de "Novedades", "Tendencias" y películas organizadas por género.
+-   **Catálogo Completo:** Explora películas por categorías como "Lo más nuevo", "Tendencias" o por géneros específicos.
+-   **Páginas de Detalle:** Cada película tiene su propia página con sinopsis, director, actores, y más.
+-   **Sistema de "Mi Lista":** Los usuarios autenticados pueden añadir o quitar películas de su lista personal de favoritos.
+-   **Calificación de Contenido:** Sistema de "Like" y "Dislike" para que los usuarios puedan valorar las películas.
+-   **Interacción Inteligente:**
+    -   Dar "Like" a una película la añade automáticamente a "Mi Lista".
+    -   Quitar el "Like" o dar "Dislike" la elimina de "Mi Lista".
+    -   El botón "+ Mi Lista" del banner principal utiliza el sistema de Eventos Globales de Livewire para comunicarse con los componentes de calificación, asegurando que el estado de isFavorite se mantenga sincronizado en toda la interfaz.
+-   **Paginación:** Las listas largas de películas en el catálogo y "Mi Lista" están paginadas para un mejor rendimiento.
+-   **Diseño Responsivo:** Interfaz estilizada con Tailwind CSS, adaptada para una experiencia de usuario agradable en diferentes dispositivos.
+-   **Panel de Administración Profesional:** Módulo privado construido con Filament PHP, que proporciona una interfaz de gestión elegante y centralizada para el contenido y los usuarios.
+-   **Control de Acceso Basado en Roles (RBAC):** Implementación robusta de roles y permisos a través del paquete Spatie Laravel Permission para controlar granularmente el acceso a las funcionalidades del panel.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🚀 Tecnologías Utilizadas
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   **Stack Principal (TALL Stack):**
+    -   [PHP 8+](https://www.php.net/)
+    -   [Laravel 12](https://laravel.com/)
+    -   [Livewire 3](https://livewire.laravel.com/)
+-   **Frontend:**
+    -   [Tailwind CSS](https://tailwindcss.com/)
+    -   [Alpine.js](https://alpinejs.dev/) (integrado en el stack TALL)
+    -   [Vite](https://vitejs.dev/) para la compilación de assets.
+-   **Base de Datos:**
+    -   MySQL / MariaDB
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 📋 Guía de Instalación Local
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Sigue estos pasos para poner en marcha el proyecto en tu entorno de desarrollo.
 
-### Premium Partners
+1.  **Clonar el repositorio:**
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+    ```bash
+    git clone https://github.com/MarGhoste/Netflix_like.git
+    cd Netflix_like
+    ```
 
-## Contributing
+2.  **Instalar dependencias de PHP:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    composer install
+    ```
 
-## Code of Conduct
+3.  **Instalar dependencias de Node.js:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    npm install
+    ```
 
-## Security Vulnerabilities
+4.  **Configurar el entorno:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    -   Copia el archivo de ejemplo `.env.example` a `.env`.
 
-## License
+    ```bash
+    cp .env.example .env
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    -   Genera una nueva clave de aplicación.
+
+    ```bash
+    php artisan key:generate
+    ```
+
+5.  **Configurar la Base de Datos:**
+
+    -   Abre tu archivo `.env` y configura los datos de conexión a tu base de datos (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
+
+6.  **Ejecutar las migraciones:**
+    Esto creará todas las tablas necesarias en tu base de datos.
+
+    ```bash
+    php artisan migrate
+    ```
+
+7.  **(Opcional) Poblar la base de datos:**
+    ejecuta los seeders para generar datos de prueba (películas, géneros, etc.)
+
+    ```bash
+    php artisan db:seed
+    ```
+
+8.  **Compilar los assets:**
+    Ejecuta Vite en modo de desarrollo para compilar CSS y JS.
+
+    ```bash
+    npm run dev
+    ```
+
+9.  **Iniciar el servidor:**
+    Finalmente, inicia el servidor de desarrollo de Laravel.
+    ```bash
+    php artisan serve
+    ```
+
+¡Listo! Ahora puedes acceder a la aplicación desde `http://127.0.0.1:8000`.
+
+CUALQUIER DUDA NO DUDES EN ESCRIBIRME :D !!!

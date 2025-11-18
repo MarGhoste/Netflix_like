@@ -7,7 +7,7 @@ use App\Models\Movie;
 use App\Models\Genre;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB; // ¡Necesario para las consultas de SUM!
+use Illuminate\Support\Facades\DB; // Necesario para las consultas de SUM
 
 class CatalogController extends Controller
 {
@@ -29,24 +29,16 @@ class CatalogController extends Controller
                 break;
 
             case 'tendencias':
-                $title = 'Las Películas más Vistas (Basado en Votos)';
+                $title = 'Las Películas más Vistas (Basado en Likes 👍)';
                 $description = 'El Top Global ordenado por la puntuación neta de la comunidad.';
 
                 // LÓGICA DE TENDENCIAS DINÁMICAS (JOIN para calcular puntuación)
-
-                // 1. Usar Left Join con la tabla 'ratings'
-                // Unimos la tabla de películas con la de votos para calcular la popularidad.
                 $query->leftJoin('ratings', 'movies.id', '=', 'ratings.movie_id')
 
-                    // 2. Agrupar por las columnas de la tabla movies
-                    // Necesario para poder usar la función SUM por película.
-                    ->groupBy('movies.id', 'movies.title', 'movies.image', 'movies.description', 'movies.release_date', 'movies.is_published', 'movies.is_new', 'movies.is_trending', 'movies.created_at', 'movies.updated_at', 'movies.slug')
-
-                    // 3. Seleccionar las columnas originales de la película y calcular la puntuación neta (SUM(rating))
-                    // La columna 'net_score' es temporal para ordenar.
+                    // Agrupamos por el ID de la película, que es suficiente para que la BD identifique cada registro único.
+                    // Esto es más robusto que listar todas las columnas manualmente.
+                    ->groupBy('movies.id')
                     ->addSelect(DB::raw('SUM(ratings.rating) as net_score'))
-
-                    // 4. Ordenar por la puntuación neta (de mayor a menor)
                     ->orderByDesc('net_score');
 
                 break;
@@ -82,10 +74,17 @@ class CatalogController extends Controller
         // Ejecuta la consulta y aplica paginación
         $movies = $query->paginate(24);
 
+        // **<< INICIO DEL CAMBIO CLAVE >>**
+        // 1. Consulta necesaria para el sidebar: Obtenemos todos los géneros.
+        $sidebarGenres = Genre::orderBy('name')->get();
+
+        // 2. Pasamos la lista de géneros a la vista
         return view('catalog', [
             'pageTitle' => $title,
             'pageDescription' => $description,
             'movies' => $movies,
+            'sidebarGenres' => $sidebarGenres, // <-- ¡Esto inyecta los géneros al layout!
         ]);
+        // **<< FIN DEL CAMBIO CLAVE >>**
     }
 }

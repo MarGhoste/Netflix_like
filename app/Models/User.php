@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Movie;
 
 class User extends Authenticatable
 {
@@ -55,5 +56,11 @@ class User extends Authenticatable
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Movie::class, 'movie_favorites', 'user_id', 'movie_id')
+            ->withTimestamps();
     }
 }
